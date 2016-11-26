@@ -31,6 +31,7 @@ separateRFA = function(xData,varName)
 #### Removing specific columns from a Dataframe based on the ####
 # Column Name
 # Example use:
+# DF <- data.frame(x = c(1, 2, 3), y = c(0, 10, NA), z=c(NA, 33, 22))
 #completeFun(DF, "y")
 ##   x  y  z
 ## 1 1  0 NA
