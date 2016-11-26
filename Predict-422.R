@@ -27,3 +27,20 @@ separateRFA = function(xData,varName)
   
   return(xData)
 }
+
+#### Removing specific columns from a Dataframe based on the ####
+# Column Name
+# Example use:
+#completeFun(DF, "y")
+##   x  y  z
+## 1 1  0 NA
+## 2 2 10 33
+
+#completeFun(DF, c("y", "z"))
+##   x  y  z
+## 2 2 10 33
+####
+completeFun <- function(data, desiredCols) {
+  completeVec <- complete.cases(data[, desiredCols])
+  return(data[completeVec, ])
+}
