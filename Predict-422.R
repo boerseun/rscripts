@@ -32,7 +32,7 @@ separateRFA = function(xData,varName)
 # Column Name
 # Example use:
 # DF <- data.frame(x = c(1, 2, 3), y = c(0, 10, NA), z=c(NA, 33, 22))
-#completeFun(DF, "y")
+# completeFun(DF, "y")
 ##   x  y  z
 ## 1 1  0 NA
 ## 2 2 10 33
@@ -44,4 +44,25 @@ separateRFA = function(xData,varName)
 completeFun <- function(data, desiredCols) {
   completeVec <- complete.cases(data[, desiredCols])
   return(data[completeVec, ])
+}
+
+
+
+#### Removing outliers in dataset ####
+# Example use:
+# set.seed(1)
+# x <- rnorm(100)
+# x <- c(-10, x, 10)
+# y <- remove_outliers(x)
+# par(mfrow = c(1, 2))
+# boxplot(x)
+# boxplot(y)
+
+remove_outliers <- function(x, na.rm = TRUE, ...) {
+  qnt <- quantile(x, probs=c(.25, .75), na.rm = na.rm, ...)
+  H <- 1.5 * IQR(x, na.rm = na.rm)
+  y <- x
+  y[x < (qnt[1] - H)] <- NA
+  y[x > (qnt[2] + H)] <- NA
+  y
 }
