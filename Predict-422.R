@@ -66,3 +66,15 @@ remove_outliers <- function(x, na.rm = TRUE, ...) {
   y[x > (qnt[2] + H)] <- NA
   y
 }
+
+
+# Prediction function from Section 6.5.3 of ISLR
+predict.regsubsets = function(object,newdata,id,...)
+{
+  form = as.formula(object$call[[2]])
+  mat = model.matrix(form,newdata)
+  coefi = coef(object,id=id)
+  xvars = names(coefi)
+  result = mat[,xvars] %*% coefi
+  return(result)
+}
