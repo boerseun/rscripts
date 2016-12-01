@@ -81,7 +81,7 @@ predict.regsubsets = function(object,newdata,id,...)
 
 # Model validation step comparing various MSEs
 # Function Credit: Dr. Wightman 
-calcMSE = function(model,modelLabel,dataSet,trainIdx,newX=NULL)
+calcMSE = function(model,modelLabel,trainDataSet,testDataSet,newX=NULL)
 {
   # The predict method for glmnet will need to be called differently from the
   # other predict methods.
@@ -92,8 +92,8 @@ calcMSE = function(model,modelLabel,dataSet,trainIdx,newX=NULL)
   }
   MSE = list(
     name = modelLabel,
-    train = mean( (predVals[trainIdx] - dataSet$DAMT[trainIdx])^2 ),
-    test = mean( (predVals[-trainIdx] - dataSet$DAMT[-trainIdx])^2 )
+    train = mean( (predVals[trainIdx] - trainDataSet$DAMT)^2 ),
+    test = mean( (predVals[-trainIdx] - testDataSet$DAMT)^2 )
   )
   
   return(MSE)
