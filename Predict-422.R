@@ -98,3 +98,28 @@ calcMSE = function(model,modelLabel,dataSet,trainIdx,newX=NULL)
   
   return(MSE)
 }
+
+
+#--------------------------------------
+# Classification Performance
+#--------------------------------------
+class.perf <- function(target, probs, thresh){
+
+    # Classify based on predicted probabilities and optimal threshold.
+    predClass <- rep("0", length(probs))
+    predClass[probs > thresh] <- "1"
+    predClass <- factor(predClass)
+
+    # Generate confusion matrix for training data
+    confMat <- table(target, predClass, dnn = c("Actual", "Predicted"))
+
+    # Calculate TP and FP rates.
+    # Note:these calculations will need to be modified if you transpose
+    #   the confusion matrix from the version above.
+    TPrate <- confMat["1", "1"] / sum(confMat["1", ])
+    FPrate <- confMat["0", "1"] / sum(confMat["0", ])
+
+    # Store results in list to pass out of function.
+    results <- list(predClass = predClass, confMat = confMat, 
+                    TPrate = TPrate, FPrate = FPrate)
+}
